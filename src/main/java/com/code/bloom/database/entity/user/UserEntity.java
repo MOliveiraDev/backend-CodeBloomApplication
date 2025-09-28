@@ -1,4 +1,4 @@
-package com.code.bloom.database.entity.users;
+package com.code.bloom.database.entity.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

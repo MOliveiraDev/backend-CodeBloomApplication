@@ -1,4 +1,4 @@
-package com.code.bloom.database.entity.users;
+package com.code.bloom.database.entity.user;
 
 public enum Role {
     ALUNO,
