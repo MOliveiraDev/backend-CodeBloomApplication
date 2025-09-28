@@ -37,3 +37,7 @@ application-test.yml
 
 ### dotenv files ###
 .env
+
+### key files ###
+.key
+.pub
