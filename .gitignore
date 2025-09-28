@@ -39,5 +39,4 @@ application-test.yml
 .env
 
 ### key files ###
-.key
-.pub
+srcc/main/resources/keys/*
