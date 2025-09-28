@@ -16,3 +16,7 @@ spring:
 
   flyway:
     enabled: false
+
+jwt:
+  public-key: ${PUBLIC_KEY}
+  private-key: ${PRIVATE_KEY}
