@@ -40,6 +40,6 @@ public class UserEntity {
     private Role role;
 
     @Column(name = "user_active", nullable = false)
-    private boolean userActive = true;
+    private UserStatus userStatus;
 
 }
