@@ -1,5 +1,6 @@
 package com.code.bloom.exceptions;
 
+import com.code.bloom.exceptions.login.PasswordIncorretException;
 import com.code.bloom.exceptions.register.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
@@ -85,5 +86,16 @@ public class GlobalExceptions {
                 java.time.LocalDateTime.now()
         );
         return ResponseEntity.badRequest().body(customException);
+    }
+
+    @ExceptionHandler(PasswordIncorretException.class)
+    public ResponseEntity<CustomExceptions> handlepasswordincorrectexception(PasswordIncorretException ex) {
+        CustomExceptions customException = new CustomExceptions(
+                ex.getMessage(),
+                "A senha para logar no sistema está errada.",
+                400,
+                java.time.LocalDateTime.now()
+        );
+        return ResponseEntity.status(401).body(customException);
     }
 }
