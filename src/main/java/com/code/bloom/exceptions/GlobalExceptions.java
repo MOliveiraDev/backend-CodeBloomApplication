@@ -1,5 +1,6 @@
 package com.code.bloom.exceptions;
 
+import com.code.bloom.exceptions.login.EmailNotFoundException;
 import com.code.bloom.exceptions.login.PasswordIncorretException;
 import com.code.bloom.exceptions.register.*;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -20,6 +21,17 @@ public class GlobalExceptions {
                 java.time.LocalDateTime.now()
         );
         return ResponseEntity.badRequest().body(customException);
+    }
+
+    @ExceptionHandler(EmailNotFoundException.class)
+    public ResponseEntity<CustomExceptions> handleEmailNotFoundException(EmailNotFoundException ex) {
+        CustomExceptions customException = new CustomExceptions(
+                ex.getMessage(),
+                "O email informado não foi encontrado.",
+                400,
+                java.time.LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(customException);
     }
 
     @ExceptionHandler(EmailActuallyExistsException.class)
