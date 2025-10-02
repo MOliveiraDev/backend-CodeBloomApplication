@@ -6,6 +6,7 @@ import com.code.bloom.service.register.RegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -17,12 +18,14 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @PostMapping("/aluno")
-    public RegisterResponse registerAlunoUser(@Valid @RequestBody RegisterRequest request) {
-        return registerService.newUserAluno(request);
+    public ResponseEntity<RegisterResponse> registerAlunoUser(@Valid @RequestBody RegisterRequest request) {
+        RegisterResponse response = registerService.newUserAluno(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/professor")
-    public RegisterResponse registerResponse(@Valid @RequestBody RegisterRequest request) {
-        return registerService.newUserProfessor(request);
+    public ResponseEntity<RegisterResponse> registerResponse(@Valid @RequestBody RegisterRequest request) {
+        RegisterResponse response = registerService.newUserProfessor(request);
+        return ResponseEntity.ok(response);
     }
 }
