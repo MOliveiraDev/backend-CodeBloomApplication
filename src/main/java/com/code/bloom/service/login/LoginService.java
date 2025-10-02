@@ -5,6 +5,7 @@ import com.code.bloom.dto.login.LoginResponse;
 import com.code.bloom.exceptions.login.EmailNotFoundException;
 import com.code.bloom.exceptions.login.PasswordIncorretException;
 import com.code.bloom.config.jwt.JwtService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +24,7 @@ public class LoginService {
     private final JwtService jwtService;
 
 
+    @Transactional
     public LoginResponse login(LoginRequest request) {
 
         try{
