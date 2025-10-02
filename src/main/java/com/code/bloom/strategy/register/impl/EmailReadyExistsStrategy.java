@@ -2,6 +2,7 @@ package com.code.bloom.strategy.register.impl;
 
 import com.code.bloom.database.repository.user.UserRepository;
 import com.code.bloom.dto.register.RegisterRequest;
+import com.code.bloom.exceptions.register.EmailActuallyExistsException;
 import com.code.bloom.strategy.register.IRegisterValidations;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -19,7 +20,7 @@ public class EmailReadyExistsStrategy implements IRegisterValidations {
 
         var user = userRepository.findByEmail(registerRequest.email());
 
-        if (!registerRequest.email().equals(user.getEmail())) {
-            throw new IllegalArgumentException("Email já está cadastrado");}
+        if (user.isPresent()) {
+            throw new EmailActuallyExistsException("Email já cadastrado");}
     }
 }
