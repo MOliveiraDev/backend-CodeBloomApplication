@@ -18,5 +18,5 @@ spring:
     enabled: false
 
 jwt:
-  public-key: ${PUBLIC_KEY}
-  private-key: ${PRIVATE_KEY}
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
