@@ -1,44 +1,46 @@
 package com.code.bloom.service.login;
 
-import com.code.bloom.database.entity.user.UserEntity;
-import com.code.bloom.database.entity.user.UserStatus;
-import com.code.bloom.database.repository.user.UserRepository;
 import com.code.bloom.dto.login.LoginRequest;
 import com.code.bloom.dto.login.LoginResponse;
-import com.code.bloom.strategy.login.ILoginValidations;
+import com.code.bloom.exceptions.login.EmailNotFoundException;
+import com.code.bloom.exceptions.login.PasswordIncorretException;
+import com.code.bloom.config.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final JwtEncoder jwtEncoder;
-    private final UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private final List<ILoginValidations> loginValidationsList;
 
-    public LoginResponse login(LoginRequest loginRequest) {
-        UserEntity user = userRepository.findByEmail(loginRequest.email());
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-        loginValidationsList.forEach(strategy -> strategy.loginResponseValidation(loginRequest));
 
-        user.setUserStatus(UserStatus.ONLINE);
-        userRepository.save(user);
+    public LoginResponse login(LoginRequest request) {
 
-        var claims = JwtClaimsSet.builder()
-                .subject(user.getUserId().toString())
-                .claim("email", user.getEmail())
-                .build();
+        try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.email(),
+                            request.password()
+                    )
+            );
 
-        var token = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String jwtToken = jwtService.generateToken(userDetails);
 
-        return new LoginResponse(token, user.getEmail());
+            return new LoginResponse(jwtToken);
+        } catch (BadCredentialsException e) {
+            throw new PasswordIncorretException("Senha incorreta");
+        }   catch (Exception e ) {
+            throw new EmailNotFoundException("Email não encontrado");
+        }
     }
-}
+        }
