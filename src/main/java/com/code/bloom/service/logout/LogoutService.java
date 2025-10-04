@@ -20,10 +20,7 @@ public class LogoutService {
     private final JwtService jwtService;
     private final TokenService tokenService;
 
-    /**
-     * Aceita o header Authorization completo ("Bearer ...") ou o token puro.
-     * Torna o logout idempotente: se o token já estiver invalidado, responde sucesso.
-     */
+
     @Transactional
     public String logout(String authorizationHeaderOrToken) {
         try {
@@ -47,14 +44,14 @@ public class LogoutService {
             UserEntity user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-            // Marca apenas o token atual como deslogado no banco
+
             tokenService.logoutToken(jwt);
 
-            // Atualiza status do usuário (opcional e dependente da sua regra de negócio)
+
             user.setUserStatus(UserStatus.OFFLINE);
             userRepository.save(user);
 
-            // Blacklist em memória (rápido) para curto prazo
+
             tokenBlacklistService.blacklistToken(jwt);
 
             log.info("Logout realizado para o usuário: {}", username);
