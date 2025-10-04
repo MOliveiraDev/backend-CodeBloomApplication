@@ -40,6 +40,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "age", nullable= false)
     private Integer age;
 
+
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
