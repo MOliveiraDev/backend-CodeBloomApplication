@@ -3,32 +3,73 @@ package com.code.bloom.service.logout;
 import com.code.bloom.database.entity.user.UserEntity;
 import com.code.bloom.database.entity.user.UserStatus;
 import com.code.bloom.database.repository.user.UserRepository;
-import com.code.bloom.strategy.logout.ILogoutValidations;
-import com.code.bloom.util.JwtUtil;
+import com.code.bloom.service.jwt.JwtService;
+import com.code.bloom.service.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LogoutService {
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
-    private final List<ILogoutValidations> logoutValidationsList;
+    private final TokenBlacklistService tokenBlacklistService;
+    private final JwtService jwtService;
+    private final TokenService tokenService;
 
-    public String logout(String token) {
+    /**
+     * Aceita o header Authorization completo ("Bearer ...") ou o token puro.
+     * Torna o logout idempotente: se o token já estiver invalidado, responde sucesso.
+     */
+    @Transactional
+    public String logout(String authorizationHeaderOrToken) {
+        try {
+            if (authorizationHeaderOrToken == null || authorizationHeaderOrToken.isBlank()) {
+                return "Token ausente. Logout não realizado.";
+            }
 
-        logoutValidationsList.forEach(strategy -> strategy.logoutResponseValidation(token));
+            String jwt = normalizeToken(authorizationHeaderOrToken);
+            if (jwt.isBlank()) {
+                return "Token ausente. Logout não realizado.";
+            }
 
-        String email = jwtUtil.extractEmail(token);
-        UserEntity user = userRepository.findByEmail(email);
 
-        user.setUserStatus(UserStatus.OFFLINE);
-        String message = "Logout realizado com sucesso";
-        userRepository.save(user);
+            if (tokenBlacklistService.isTokenBlacklisted(jwt)) {
+                log.info("Logout idempotente: token já invalidado");
+                return "Logout realizado com sucesso";
+            }
 
-        return message;
+            String username = jwtService.extractUsername(jwt);
+
+            UserEntity user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+            // Marca apenas o token atual como deslogado no banco
+            tokenService.logoutToken(jwt);
+
+            // Atualiza status do usuário (opcional e dependente da sua regra de negócio)
+            user.setUserStatus(UserStatus.OFFLINE);
+            userRepository.save(user);
+
+            // Blacklist em memória (rápido) para curto prazo
+            tokenBlacklistService.blacklistToken(jwt);
+
+            log.info("Logout realizado para o usuário: {}", username);
+            return "Logout realizado com sucesso";
+        } catch (Exception e) {
+            log.error("Erro ao realizar logout: {}", e.getMessage());
+            return "Falha ao realizar logout: token inválido ou expirado.";
+        }
+    }
+
+    private String normalizeToken(String headerOrToken) {
+        String raw = headerOrToken.trim();
+        if (raw.regionMatches(true, 0, "Bearer ", 0, 7)) {
+            return raw.substring(7).trim();
+        }
+        return raw;
     }
 }
