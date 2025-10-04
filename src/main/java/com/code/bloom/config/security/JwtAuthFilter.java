@@ -1,7 +1,7 @@
 package com.code.bloom.config.security;
 
 import com.code.bloom.database.entity.user.UserEntity;
-import com.code.bloom.config.jwt.JwtService;
+import com.code.bloom.service.jwt.JwtService;
 import com.code.bloom.service.logout.TokenBlacklistService;
 import com.code.bloom.service.user.UserServiceImpl;
 import jakarta.servlet.FilterChain;
