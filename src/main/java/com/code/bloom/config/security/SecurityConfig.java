@@ -36,13 +36,13 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/register/aluno/**",
                                 "/api/v1/login/**",
+                                "/api/v1/logout/**",
                                 "/api/auth/logout/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        .requestMatchers("/api/auth/register/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/workplan/generate/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/register/professor/**").hasRole("PROFESSOR")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
