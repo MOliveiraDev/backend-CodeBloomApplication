@@ -1,4 +1,4 @@
-package com.code.bloom.config.jwt;
+package com.code.bloom.service.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
