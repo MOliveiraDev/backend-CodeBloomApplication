@@ -2,20 +2,16 @@ package com.code.bloom.service.register;
 
 import com.code.bloom.database.entity.user.*;
 import com.code.bloom.database.repository.user.RoleRepository;
-import com.code.bloom.database.repository.user.TokenRepository;
 import com.code.bloom.database.repository.user.UserRepository;
 import com.code.bloom.database.repository.user.UserRoleRepository;
 import com.code.bloom.dto.register.RegisterRequest;
 import com.code.bloom.dto.register.RegisterResponse;
-import com.code.bloom.service.jwt.JwtService;
-import com.code.bloom.service.jwt.TokenService;
 import com.code.bloom.strategy.register.IRegisterValidations;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -27,8 +23,6 @@ public class RegisterService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final List<IRegisterValidations> registerValidationsList;
-    private final JwtService jwtService;
-    private final TokenService tokenService;
 
 
     @Transactional
