@@ -20,3 +20,6 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION}
+
+root:
+  password: ${ROOT_PASSWORD}
