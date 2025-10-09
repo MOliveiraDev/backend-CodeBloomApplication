@@ -1,4 +1,4 @@
-package com.code.bloom.service.register;
+package com.code.bloom.service.auth;
 
 import com.code.bloom.database.entity.user.*;
 import com.code.bloom.database.repository.user.RoleRepository;

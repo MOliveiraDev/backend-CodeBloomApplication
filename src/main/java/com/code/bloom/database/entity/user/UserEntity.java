@@ -1,5 +1,6 @@
 package com.code.bloom.database.entity.user;
 
+import com.code.bloom.database.entity.auth.TokenEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -55,7 +56,7 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRole;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

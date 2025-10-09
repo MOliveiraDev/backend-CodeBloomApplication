@@ -1,8 +1,8 @@
 package com.code.bloom.service.jwt;
 
-import com.code.bloom.database.entity.user.TokenEntity;
+import com.code.bloom.database.entity.auth.TokenEntity;
 import com.code.bloom.database.entity.user.UserEntity;
-import com.code.bloom.database.repository.user.TokenRepository;
+import com.code.bloom.database.repository.auth.TokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

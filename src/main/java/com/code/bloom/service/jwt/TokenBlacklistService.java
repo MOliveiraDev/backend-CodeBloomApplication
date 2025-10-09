@@ -1,4 +1,4 @@
-package com.code.bloom.service.logout;
+package com.code.bloom.service.jwt;
 
 import org.springframework.stereotype.Service;
 

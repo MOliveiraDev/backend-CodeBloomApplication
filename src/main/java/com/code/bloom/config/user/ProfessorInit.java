@@ -1,4 +1,4 @@
-package com.code.bloom.config.security;
+package com.code.bloom.config.user;
 
 import com.code.bloom.database.entity.user.RoleEntity;
 import com.code.bloom.database.entity.user.UserEntity;

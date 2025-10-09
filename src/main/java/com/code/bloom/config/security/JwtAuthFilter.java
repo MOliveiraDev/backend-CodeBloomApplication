@@ -2,7 +2,7 @@ package com.code.bloom.config.security;
 
 import com.code.bloom.database.entity.user.UserEntity;
 import com.code.bloom.service.jwt.JwtService;
-import com.code.bloom.service.logout.TokenBlacklistService;
+import com.code.bloom.service.jwt.TokenBlacklistService;
 import com.code.bloom.service.user.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,6 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (path.startsWith("/api/v1/register/aluno") ||
                 path.startsWith("/api/v1/login/") ||
                 path.startsWith("/api/v1/logout") ||
+                path.startsWith("/api/v1/home/**") ||
                 path.startsWith("/swagger-ui") ||
                 path.startsWith("/v3/api-docs") ||
                 path.startsWith("/swagger-ui.html")) {

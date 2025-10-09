@@ -1,8 +1,8 @@
-package com.code.bloom.controller.login;
+package com.code.bloom.controller.auth;
 
 import com.code.bloom.dto.login.LoginRequest;
 import com.code.bloom.dto.login.LoginResponse;
-import com.code.bloom.service.login.LoginService;
+import com.code.bloom.service.auth.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

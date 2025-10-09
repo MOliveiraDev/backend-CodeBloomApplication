@@ -1,6 +1,6 @@
-package com.code.bloom.controller.logout;
+package com.code.bloom.controller.auth;
 
-import com.code.bloom.service.logout.LogoutService;
+import com.code.bloom.service.auth.LogoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

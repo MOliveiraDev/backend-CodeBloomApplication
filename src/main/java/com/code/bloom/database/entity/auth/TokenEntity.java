@@ -1,5 +1,6 @@
-package com.code.bloom.database.entity.user;
+package com.code.bloom.database.entity.auth;
 
+import com.code.bloom.database.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.code.bloom.database.repository.user;
+package com.code.bloom.database.repository.auth;
 
-import com.code.bloom.database.entity.user.TokenEntity;
+import com.code.bloom.database.entity.auth.TokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

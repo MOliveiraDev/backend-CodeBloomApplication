@@ -1,10 +1,11 @@
-package com.code.bloom.service.logout;
+package com.code.bloom.service.auth;
 
 import com.code.bloom.database.entity.user.UserEntity;
 import com.code.bloom.database.entity.user.UserStatus;
 import com.code.bloom.database.repository.user.UserRepository;
 import com.code.bloom.service.jwt.JwtService;
 import com.code.bloom.service.jwt.TokenService;
+import com.code.bloom.service.jwt.TokenBlacklistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,22 +40,19 @@ public class LogoutService {
                 return "Logout realizado com sucesso";
             }
 
-            String username = jwtService.extractUsername(jwt);
+            String email = jwtService.extractUsername(jwt);
 
-            UserEntity user = userRepository.findByUsername(username)
+            UserEntity user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-
             tokenService.logoutToken(jwt);
-
 
             user.setUserStatus(UserStatus.OFFLINE);
             userRepository.save(user);
 
-
             tokenBlacklistService.blacklistToken(jwt);
 
-            log.info("Logout realizado para o usuário: {}", username);
+            log.info("Logout realizado para o usuário: {}", email);
             return "Logout realizado com sucesso";
         } catch (Exception e) {
             log.error("Erro ao realizar logout: {}", e.getMessage());

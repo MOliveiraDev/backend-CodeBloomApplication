@@ -1,4 +1,4 @@
-package com.code.bloom.service.login;
+package com.code.bloom.service.auth;
 
 import com.code.bloom.database.entity.user.UserEntity;
 import com.code.bloom.database.entity.user.UserStatus;

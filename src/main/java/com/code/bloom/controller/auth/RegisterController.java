@@ -1,8 +1,8 @@
-package com.code.bloom.controller.register;
+package com.code.bloom.controller.auth;
 
 import com.code.bloom.dto.register.RegisterRequest;
 import com.code.bloom.dto.register.RegisterResponse;
-import com.code.bloom.service.register.RegisterService;
+import com.code.bloom.service.auth.RegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
