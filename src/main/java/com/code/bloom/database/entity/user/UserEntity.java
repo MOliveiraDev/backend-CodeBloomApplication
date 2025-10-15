@@ -41,16 +41,11 @@ public class UserEntity implements UserDetails {
     @Column(name = "age", nullable= false)
     private Integer age;
 
-
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-
     @Column(name = "password", nullable = false)
     private String password;
-
-    @Transient
-    private String confirmPassword;
 
     @Column(name = "user_active", nullable = false)
     @Enumerated(EnumType.STRING)
