@@ -33,17 +33,20 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // 🔓 1️⃣ Rotas públicas (sem login)
                         .requestMatchers(
-                                "/api/v1/register/aluno/**",
+                                "/api/v1/register/**",
                                 "/api/v1/login/**",
                                 "/api/v1/logout/**",
-                                "/api/auth/logout/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/api/v1/home/**"
+                                "/swagger-ui.html"
                         ).permitAll()
-                        .requestMatchers("/api/v1/register/professor/**").hasRole("PROFESSOR")
+                        .requestMatchers(
+                                "/api/v1/professor/**",
+                                "/api/v1/register/professor/**"
+                        ).hasRole("PROFESSOR")
+                        .requestMatchers("/api/v1/logout/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -51,6 +54,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
