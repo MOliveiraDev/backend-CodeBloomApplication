@@ -32,19 +32,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String path = request.getServletPath();
 
 
-        if (path.startsWith("/api/v1/register/aluno") ||
-                path.startsWith("/api/v1/login/") ||
-                path.startsWith("/api/v1/logout") ||
-                path.startsWith("/api/v1/home/**") ||
-                path.startsWith("/swagger-ui") ||
-                path.startsWith("/v3/api-docs") ||
-                path.startsWith("/swagger-ui.html")) {
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui.html")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         final String jwt;
-        final String username;
+        final String email;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -58,10 +52,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        username = jwtService.extractUsername(jwt);
+        email = jwtService.extractUsername(jwt);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserEntity userDetails = (UserEntity) userService.loadUserByUsername(username);
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserEntity userDetails = (UserEntity) userService.loadUserByUsername(email);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken =
