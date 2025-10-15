@@ -32,7 +32,7 @@ public class MyAccountService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 
         List<UserRoleResponse> roles = user.getUserRole().stream()
-                .map(r -> new UserRoleResponse(r.getIdUserRole(), r.getRole().getRoleName()))
+                .map(r -> new UserRoleResponse(r.getRole().getRoleName()))
                 .toList();
 
         return new MyAccountResponse(
