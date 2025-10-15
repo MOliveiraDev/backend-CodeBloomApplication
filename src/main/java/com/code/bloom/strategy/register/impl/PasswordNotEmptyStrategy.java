@@ -16,9 +16,5 @@ public class PasswordNotEmptyStrategy implements IRegisterValidations {
         if (request.password() == null || request.password().isEmpty()) {
             throw new PasswordEqualsException("A senha não pode estar em branco");
         }
-
-        if (request.confirmPassword() == null || request.confirmPassword().isEmpty()) {
-            throw new PasswordEqualsException("A confirmação de senha não pode estar em branco");
-        }
     }
 }
