@@ -56,17 +56,6 @@ public class GlobalExceptions {
         return ResponseEntity.status(409).body(customException);
     }
 
-    @ExceptionHandler(PasswordEqualsException.class)
-    public ResponseEntity<CustomExceptions> handlePasswordEqualsException(PasswordEqualsException ex) {
-        CustomExceptions customException = new CustomExceptions(
-                ex.getMessage(),
-                "As senhas não coincidem.",
-                400,
-                java.time.LocalDateTime.now()
-        );
-        return ResponseEntity.badRequest().body(customException);
-    }
-
     @ExceptionHandler(PasswordLengthExeption.class)
     public ResponseEntity<CustomExceptions> handlePasswordLengthExeption(PasswordLengthExeption ex) {
         CustomExceptions customException = new CustomExceptions(
