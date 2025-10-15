@@ -23,3 +23,7 @@ jwt:
 
 root:
   password: ${ROOT_PASSWORD}
+
+n8n:
+  webhook:
+    url: ${WEBHOOK_DEV}
