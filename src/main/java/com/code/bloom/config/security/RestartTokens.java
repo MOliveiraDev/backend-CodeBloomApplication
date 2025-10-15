@@ -11,7 +11,7 @@ public class RestartTokens {
 
     private final TokenService tokenService;
 
-    @Scheduled(fixedRate = 18000)
+    @Scheduled(fixedRate = 1800000)
     public void cleanLoggedOutTokens() {
         tokenService.deleteLoggedOutTokens();
     }
