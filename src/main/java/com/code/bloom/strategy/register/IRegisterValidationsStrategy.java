@@ -3,7 +3,7 @@ package com.code.bloom.strategy.register;
 import com.code.bloom.dto.register.RegisterRequest;
 
 
-public interface IRegisterValidations {
+public interface IRegisterValidationsStrategy {
 
     void registerResponseValidations(RegisterRequest request);
 }

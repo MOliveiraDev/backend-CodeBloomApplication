@@ -6,7 +6,7 @@ import com.code.bloom.database.repository.user.UserRepository;
 import com.code.bloom.database.repository.user.UserRoleRepository;
 import com.code.bloom.dto.register.RegisterRequest;
 import com.code.bloom.dto.register.RegisterResponse;
-import com.code.bloom.strategy.register.IRegisterValidations;
+import com.code.bloom.strategy.register.IRegisterValidationsStrategy;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +22,7 @@ public class RegisterService {
     private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final List<IRegisterValidations> registerValidationsList;
+    private final List<IRegisterValidationsStrategy> registerValidationsList;
 
 
     @Transactional
