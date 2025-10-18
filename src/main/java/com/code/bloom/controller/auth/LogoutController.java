@@ -20,6 +20,4 @@ public class LogoutController {
         String response = logoutService.logout(authorizationHeader);
         return ResponseEntity.ok(response);
     }
-
-
-    }
+}
