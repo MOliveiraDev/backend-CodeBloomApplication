@@ -1,8 +1,10 @@
 package com.code.bloom.exceptions;
 
+import com.code.bloom.exceptions.auth.UnauthorizedException;
 import com.code.bloom.exceptions.login.EmailNotFoundException;
 import com.code.bloom.exceptions.login.PasswordIncorretException;
 import com.code.bloom.exceptions.register.*;
+import com.code.bloom.exceptions.webhook.WebhookException;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -98,5 +100,27 @@ public class GlobalExceptions {
                 java.time.LocalDateTime.now()
         );
         return ResponseEntity.status(401).body(customException);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<CustomExceptions> handleUnauthorizedException(UnauthorizedException ex) {
+        CustomExceptions customException = new CustomExceptions(
+                ex.getMessage(),
+                "Acesso não autorizado.",
+                401,
+                java.time.LocalDateTime.now()
+        );
+        return ResponseEntity.status(401).body(customException);
+    }
+
+    @ExceptionHandler(WebhookException.class)
+    public ResponseEntity<CustomExceptions> handleWebhookException(WebhookException ex) {
+        CustomExceptions customException = new CustomExceptions(
+                ex.getMessage(),
+                "Erro ao processar a requisição via webhook.",
+                502,
+                java.time.LocalDateTime.now()
+        );
+        return ResponseEntity.status(502).body(customException);
     }
 }
