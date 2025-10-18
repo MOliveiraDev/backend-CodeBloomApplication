@@ -27,7 +27,7 @@ public class AssistantService {
 
 
         ChatsEntity chats = chatsService.findByUser(user)
-                .orElseGet(() -> chatsService.createChat(user, "Chat do Aluno"));
+                .orElseGet(() -> chatsService.createChat(user, "Novo Chat"));
 
         messagesService.saveMessage(chats, request.message(), FlowRole.USER);
 
@@ -36,7 +36,7 @@ public class AssistantService {
         messagesService.saveMessage(chats, n8nResponse.answer(), FlowRole.ASSISTANT);
 
         return new MessageResponse(
-                chats.getTitle(),
+                n8nResponse.title(),
                 n8nResponse.answer(),
                 n8nResponse.context(),
                 n8nResponse.type(),

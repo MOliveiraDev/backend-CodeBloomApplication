@@ -41,3 +41,6 @@ application-test.yml
 ### key files ###
 app.key
 app.pub
+
+### docker test ###
+docker-compose-test.yml
