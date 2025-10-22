@@ -15,7 +15,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    enabled: false
+    enabled: true
 
 jwt:
   secret: ${JWT_SECRET}
@@ -26,4 +26,4 @@ root:
 
 n8n:
   webhook:
-    url: ${WEBHOOK_DEV}
+    url: ${WEBHOOK_PROD}
