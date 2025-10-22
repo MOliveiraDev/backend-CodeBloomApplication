@@ -27,7 +27,7 @@ public class AssistantService {
 
 
         ChatsEntity chats = chatsService.findByUser(user)
-                .orElseGet(() -> chatsService.createChat(user, "Novo Chat" + user.getUsername()));
+                .orElseGet(() -> chatsService.createChat(user, "Chat bot do usuário: " + user.getUsername()));
 
         messagesService.saveMessage(chats, request.message(), FlowRole.USER);
 
