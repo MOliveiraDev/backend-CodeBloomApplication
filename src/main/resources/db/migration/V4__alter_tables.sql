@@ -1,0 +1,14 @@
+ALTER TABLE chats_tb
+    ADD CONSTRAINT FK_CHATS_TB_ON_USER FOREIGN KEY (user_id) REFERENCES users_tb (user_id);
+
+ALTER TABLE messages_tb
+    ADD CONSTRAINT FK_MESSAGES_TB_ON_CHATS FOREIGN KEY (chats_id) REFERENCES chats_tb (chats_id);
+
+ALTER TABLE token_tb
+    ADD CONSTRAINT FK_TOKEN_TB_ON_USER FOREIGN KEY (user_id) REFERENCES users_tb (user_id);
+
+ALTER TABLE user_role
+    ADD CONSTRAINT FK_USER_ROLE_ON_ROLE FOREIGN KEY (role_id) REFERENCES roles_tb (role_id);
+
+ALTER TABLE user_role
+    ADD CONSTRAINT FK_USER_ROLE_ON_USER FOREIGN KEY (user_id) REFERENCES users_tb (user_id);
