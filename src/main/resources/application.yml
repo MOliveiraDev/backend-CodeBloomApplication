@@ -26,4 +26,4 @@ root:
 
 n8n:
   webhook:
-    url: ${WEBHOOK_DEV}
+    url: ${WEBHOOK}
