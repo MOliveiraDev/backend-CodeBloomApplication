@@ -5,13 +5,11 @@ import com.code.bloom.exceptions.login.EmailNotFoundException;
 import com.code.bloom.exceptions.login.PasswordIncorretException;
 import com.code.bloom.exceptions.register.*;
 import com.code.bloom.exceptions.webhook.WebhookException;
-import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-@Hidden
 public class GlobalExceptions {
 
     @ExceptionHandler(RuntimeException.class)
