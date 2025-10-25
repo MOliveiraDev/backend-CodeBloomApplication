@@ -5,6 +5,9 @@ import com.code.bloom.exceptions.webhook.WebhookException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -30,8 +33,13 @@ public class N8nConnService {
                 "message", message,
                 "username", username
             );
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
             
-            ResponseEntity<N8nResponse> response = restTemplate.postForEntity(webHook, body, N8nResponse.class);
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
+            ResponseEntity<N8nResponse> response = restTemplate.postForEntity(webHook, request, N8nResponse.class);
+
             return response.getBody();
             
         } catch (UnknownContentTypeException ex) {
