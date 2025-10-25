@@ -33,14 +33,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // 🔓 1️⃣ Rotas públicas (sem login)
                         .requestMatchers(
                                 "/api/v1/register/**",
                                 "/api/v1/login/**",
-                                "/api/v1/logout/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html"
+                                "/api/v1/logout/**"
                         ).permitAll()
                         .requestMatchers(
                                 "/api/v1/professor/**",
