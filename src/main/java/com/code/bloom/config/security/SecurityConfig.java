@@ -36,13 +36,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/register/**",
-                                "/api/v1/login/**",
-                                "/api/v1/logout/**"
+                                "/api/v1/login/**"
                         ).permitAll()
                         .requestMatchers(
                                 "/api/v1/professor/**",
                                 "/api/v1/register/professor/**"
-                        ).hasRole("PROFESSOR")
+                        ).hasAnyRole("PROFESSOR", "PROFESSOR_ROOT")
                         .requestMatchers("/api/v1/logout/**").authenticated()
                         .anyRequest().authenticated()
                 )
