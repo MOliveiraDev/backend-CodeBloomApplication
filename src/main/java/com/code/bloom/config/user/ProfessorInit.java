@@ -43,10 +43,10 @@ public class ProfessorInit implements CommandLineRunner {
             professor.setUserStatus(UserStatus.OFFLINE);
             userRepository.save(professor);
 
-            RoleEntity professorRole = roleRepository.findByRoleName("PROFESSOR")
+            RoleEntity professorRole = roleRepository.findByRoleName("PROFESSOR_ROOT")
                     .orElseGet(() -> {
                         RoleEntity newRole = new RoleEntity();
-                        newRole.setRoleName("PROFESSOR");
+                        newRole.setRoleName("PROFESSOR_ROOT");
                         return roleRepository.save(newRole);
                     });
 
