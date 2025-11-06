@@ -25,7 +25,7 @@ public class RegisterController {
     }
 
     @PostMapping("/professor")
-    @PreAuthorize( "hasRole('PROFESSOR')")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'PROFESSOR_ROOT')")
     public ResponseEntity<RegisterResponse> registerResponse(@Valid @RequestBody RegisterRequest request) {
         RegisterResponse response = registerService.newUserProfessor(request);
         return ResponseEntity.ok(response);
