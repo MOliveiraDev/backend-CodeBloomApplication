@@ -40,6 +40,11 @@ public class TokenService {
         }
 
         tokenRepository.findByToken(jwtToken).ifPresent(t -> markTokenLoggedOutAndMaybeOffline(t));
+
+        tokenRepository.findByToken(jwtToken).ifPresent(t -> {
+            t.setLoggedOut(true);
+            tokenRepository.save(t);
+        });
     }
 
     private void markTokenLoggedOutAndMaybeOffline(TokenEntity t) {
