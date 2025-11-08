@@ -19,7 +19,7 @@ public class AssistantService {
     private final ChatsService chatsService;
     private final IAuthenticationStrategy iAuthenticationStrategy;
     private final MessagesService messagesService;
-    private final N8nConnService n8NConnService;
+    private final N8nConnService n8nConnService;
 
     public MessageResponse processUserMessage(MessageRequest request) {
 
@@ -31,7 +31,7 @@ public class AssistantService {
 
         messagesService.saveMessage(chats, request.message(), FlowRole.USER);
 
-        N8nResponse n8nResponse = n8NConnService.sendToN8n(request.message(), user.getUsername());
+        N8nResponse n8nResponse = n8nConnService.sendToN8n(request.message(), user.getUsername());
 
         messagesService.saveMessage(chats, n8nResponse.answer(), FlowRole.ASSISTANT);
 

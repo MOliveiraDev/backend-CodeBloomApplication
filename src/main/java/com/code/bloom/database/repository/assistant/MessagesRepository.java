@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface MessagesRepository extends JpaRepository<MessagesEntity, Long> {
 
-    Optional<MessagesEntity> findTopByChatsOrderByTimestampDesc(ChatsEntity chats);
+    Optional<MessagesEntity> findTopByChatsOrderByTimestampDesc(Optional<ChatsEntity> chats);
 
-    List<MessagesEntity> findByChatsOrderByTimestampAsc(ChatsEntity chats);
+    List<MessagesEntity> findByChatsOrderByTimestampAsc(Optional<ChatsEntity> chats);
 }

@@ -28,22 +28,20 @@ public class UserHistoricChatsService {
     public ChatsHistoricResponse getHistoricChats() {
         UserEntity user = iAuthenticationStrategy.getAuthenticatedUser();
 
-        ChatsEntity chat = chatsRespository.findByUser(user)
-                .orElseThrow(() -> new IllegalStateException("Nenhum chat encontrado para o usuário"));
+        Optional<ChatsEntity> chat = chatsRespository.findByUser(user);
 
         Optional<MessagesEntity> lastMessageOpt = messagesRepository.findTopByChatsOrderByTimestampDesc(chat);
 
         String lastMessage = lastMessageOpt.map(MessagesEntity::getContext).orElse("");
 
-        return new ChatsHistoricResponse(chat.getTitle(), lastMessage, chat.getCreatedAt());
+        return new ChatsHistoricResponse(chat.map(ChatsEntity::getTitle).orElse(""), lastMessage);
     }
 
     @Transactional(readOnly = true)
     public ChatsMessagesResponse getChatMessages() {
         UserEntity user = iAuthenticationStrategy.getAuthenticatedUser();
 
-        ChatsEntity chat = chatsRespository.findByUser(user)
-                .orElseThrow(() -> new IllegalStateException("Nenhum chat encontrado para o usuário"));
+        Optional<ChatsEntity> chat = chatsRespository.findByUser(user);
 
         List<MessagesEntity> messages = messagesRepository.findByChatsOrderByTimestampAsc(chat);
 
@@ -51,7 +49,7 @@ public class UserHistoricChatsService {
                 .map(msg -> new MessageDto(msg.getContext(), msg.getRole().name(), msg.getTimestamp()))
                 .toList();
 
-        return new ChatsMessagesResponse(chat.getTitle(), chat.getCreatedAt(), messageDtos);
+        return new ChatsMessagesResponse(chat.map(ChatsEntity::getTitle).orElse(""), messageDtos);
     }
 
 }
